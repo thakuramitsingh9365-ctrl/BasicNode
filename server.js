@@ -1,6 +1,11 @@
 const http = require('http');
 
-http.createServer((request, response) => {
+const hostname = '127.0.0.1';
+const port = 3000;
+
+const server = http.createServer((request, response) => {
+
+
   const { headers, method, url } = request;
   let body = [];
   request.on('error', (err) => {
@@ -29,5 +34,15 @@ http.createServer((request, response) => {
 
     // END OF NEW STUFF
   });
-  console.log("Server is running")
-}).listen(3000);
+
+});
+
+
+
+
+
+
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});
