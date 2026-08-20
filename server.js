@@ -14,31 +14,35 @@ server.get("/", (req, res) => {
      <input type="number" id="number" name="number1"><br><br>
      <label for="number">Num2:</label>
      <input type="number" id="number" name="number2"><br><br>
-     <button name="option" value="add" type="submit">Add</button>
-     <button name="option" value="sub" type="submit">Sub</button>
+
+     <input type="radio" value="add" name="select">ADD</input>
+     <input type="radio" value="sub" name="select">Sub</input>
+     
+
+      <button type="submit">Submit</button>
 
      </form>
    `);
 });
 
 server.post("/submit", (req, res) => {
-  let { number1, number2, option } = req.body;
+  let { number1, number2, select } = req.body;
 
-  console.log(number1, number2, option);
+  console.log(number1, number2, select);
   let result = 0;
   number1 = Number(number1);
   number2 = Number(number2);
-  if (option == "add") {
+  if (select == "add") {
     result = number1 + number2;
   }
-  if (option == "sub") {
+  if (select == "sub") {
     result = number1 - number2;
   }
   const sum = number1 * 1 + number2 * 1;
   const output = {
     a: number1,
     b: number2,
-    Answer: result,
+    Answer: result
   };
   res.send(JSON.stringify(output));
   //  res.send(req.body);
