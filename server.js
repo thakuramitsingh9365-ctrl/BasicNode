@@ -14,10 +14,15 @@ server.get("/", (req, res) => {
      <input type="number" id="number" name="number1"><br><br>
      <label for="number">Num2:</label>
      <input type="number" id="number" name="number2"><br><br>
-
-     <input type="radio" value="add" name="select">ADD</input>
-     <input type="radio" value="sub" name="select">Sub</input>
+ 
      
+    <label>select</label>
+    <select name="option">
+       <option value="add">Add</option>
+       <option value="sub">Sub</option>
+       <option value="div">Division</option>
+       <option value="multi">Multi</option>
+    </select>
 
       <button type="submit">Submit</button>
 
@@ -26,17 +31,25 @@ server.get("/", (req, res) => {
 });
 
 server.post("/submit", (req, res) => {
-  let { number1, number2, select } = req.body;
+  let { number1, number2, option } = req.body;
 
-  console.log(number1, number2, select);
+  console.log(number1, number2, option);
   let result = 0;
   number1 = Number(number1);
   number2 = Number(number2);
-  if (select == "add") {
+  if (option == "add") {
     result = number1 + number2;
   }
-  if (select == "sub") {
+  if (option == "sub") {
     result = number1 - number2;
+  }
+
+  if(option == "div"){
+    result = number1 / number2;
+  }
+
+  if(option == "multi"){
+    result =number1*number2;
   }
   const sum = number1 * 1 + number2 * 1;
   const output = {
