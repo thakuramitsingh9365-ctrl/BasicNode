@@ -16,46 +16,33 @@ server.get("/", (req, res) => {
      <input type="number" id="number" name="number2"><br><br>
  
      
-    <label>select</label>
-    <select name="option">
-       <option value="add">Add</option>
-       <option value="sub">Sub</option>
-       <option value="div">Division</option>
-       <option value="multi">Multi</option>
-    </select>
+    <input type="checkbox" id="check" name="check" value="add">
+    <label for="check">Add/Sub</label>
+    <button type="submit">Submit</button>
 
-      <button type="submit">Submit</button>
-
-     </form>
+    </form>
    `);
 });
 
 server.post("/submit", (req, res) => {
-  let { number1, number2, option } = req.body;
+  let { number1, number2, check } = req.body;
 
-  console.log(number1, number2, option);
+  console.log(number1, number2, check);
   let result = 0;
   number1 = Number(number1);
   number2 = Number(number2);
-  if (option == "add") {
+  if (check == "add") {
     result = number1 + number2;
-  }
-  if (option == "sub") {
+  }else{
     result = number1 - number2;
   }
+    
 
-  if(option == "div"){
-    result = number1 / number2;
-  }
-
-  if(option == "multi"){
-    result =number1*number2;
-  }
   const sum = number1 * 1 + number2 * 1;
   const output = {
     a: number1,
     b: number2,
-    Answer: result
+    Answer: result,
   };
   res.send(JSON.stringify(output));
   //  res.send(req.body);
