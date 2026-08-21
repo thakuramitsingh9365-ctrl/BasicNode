@@ -1,53 +1,56 @@
 const express = require("express");
-const server = express();
+ const server = express();
+ const hostname="127.0.0.1";
+ const port = 3000;
 
-const hostname = "127.0.0.1";
-const port = 3000;
+ server.use(express.urlencoded({ extended: true }));
 
-server.use(express.urlencoded({ extended: true }));
+ server.get("/",(req,res)=>{
+    res.send(`
+        <form method="POST" action="/submit">
+          
+        <label for="first">First Name:</label>
+        <input type="text" id="first" name="firstname"><br><br>
+        <label for="last">Last Name:</label>
+        <input type="text" id="last" name="lastname"><br><br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+        <label for="retype">Re-type Password:</label>
+        <input type="password" id="retype" name="retype"><br><br>
+        <label for="contact">Contact:</label>
+        <input type="number" id="contact" name="contact"><br><br>
 
-server.get("/", (req, res) => {
-  res.send(`
-     <form method="POST" action="/submit">   
+        <label>Gender:</label>
+        <select name="select">
+          <option>Male</option>
+          <option>Female</option>
+        </select>
 
-     <label for="number">Num1:</label>
-     <input type="number" id="number" name="number1"><br><br>
-     <label for="number">Num2:</label>
-     <input type="number" id="number" name="number2"><br><br>
- 
-     
-    <input type="checkbox" id="check" name="check" value="add">
-    <label for="check">Add/Sub</label>
-    <button type="submit">Submit</button>
+        <button name="option">submit</button>
+        </form>
+        `);
+ });
 
-    </form>
-   `);
-});
+ server.post("/submit",(req,res)=>{
+     let {firstname,lastname,email,password,retype,contact} = req.body;
 
-server.post("/submit", (req, res) => {
-  let { number1, number2, check } = req.body;
+     console.log(firstname,lastname,email,password,retype,contact);
+     let result=0;
 
-  console.log(number1, number2, check);
-  let result = 0;
-  number1 = Number(number1);
-  number2 = Number(number2);
-  if (check == "add") {
-    result = number1 + number2;
-  }else{
-    result = number1 - number2;
-  }
-    
+     const output = {
+        a: firstname,
+        b: lastname,
+        c: email,
+        d: password,
+        e: retype,
+        f: contact,
+     };
+     res.send(JSON.stringify(output));
+ });
 
-  const sum = number1 * 1 + number2 * 1;
-  const output = {
-    a: number1,
-    b: number2,
-    Answer: result,
-  };
-  res.send(JSON.stringify(output));
-  //  res.send(req.body);
-});
-
-server.listen(port, hostname, () => {
+ server.listen(port,hostname, ()=>{
   console.log(`Server running at http://${hostname}:${port}/`);
-});
+
+ })
