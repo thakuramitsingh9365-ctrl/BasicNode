@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>POST JSON example</title>
+</head>
+<body>
+
+  <form id="myForm">
+    <label for="num1">Enter number 1:</label>
+    <input type="number" name="num1" id="num1"><br>
+    <label for="num2">Enter number 2:</label>
+    <input type="number" name="num2" id="num2"><br>
+    <button type="button" onclick="sendData()">Calculate sum</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    function sendData() {
+      // Get the input values
+      const num1 = document.getElementById('num1').value;
+      const num2 = document.getElementById('num2').value;
+
+      // Create a JSON object with the input values
+      const data = {
+        num1: num1,
+        num2: num2
+      };
+
+      // Convert the JSON object to a string
+      const jsonData = JSON.stringify(data);
+
+      // Send a POST request to the server
+      fetch('http://localhost:3000/sum', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Display the sum in the result div
+        document.getElementById('result').innerHTML = `The sum of ${num1} and ${num2} is ${data.sum}.`;
+      })
+      .catch(error => console.error(error));
+    }
+  </script>
+
+</body>
+</html>
