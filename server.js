@@ -1,14 +1,44 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+const mysql = require('mysql2');
+const ejs = require('ejs');
+const fs = require('fs');
 
-// Define a route to render the template with GET parameters
-app.get('/hello', (req, res) => {
-  const name = req.query.name || 'world'; // Get the "name" parameter from the query string
-  res.render('hello.ejs', { name }); // Pass the "name" parameter to the template
+// Create a MySQL connection
+const connection = mysql.createConnection({
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '1234',
+  database: 'node'
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+
+// Connect to the MySQL server
+connection.connect((error) => {
+  if (error) throw error;
+  console.log('Connected to MySQL server');
+  
+  // Query the table
+  connection.query('SELECT * FROM data', (error, results) => {
+    if (error) throw error;
+    
+    // Read the EJS template file
+    fs.readFile('views/template.ejs', 'utf8', (error, template) => {
+      if (error) throw error;
+      
+      // Render the EJS template with data from the MySQL table
+      const html = ejs.render(template, { data: results });
+      
+      // Save the rendered HTML to a file
+      fs.writeFile('output.html', html, 'utf8', (error) => {
+        if (error) throw error;
+        console.log('HTML file generated successfully');
+        
+        // Close the MySQL connection
+        connection.end((error) => {
+          if (error) throw error;
+          console.log('Disconnected from MySQL server');
+        });
+      });
+    });
+  });
 });
