@@ -1,31 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Product List</title>
-  <style>
-     .brand{
-        color: blue;
-     }
-     .product-image{
-        height: 200px;
-        width: 200px;
-        margin-left: 300px;
-     }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
 <body>
-  <h1 style="color: red;">Product List</h1>
-  <ul class="brand">
-    <% products.forEach((product) => { %>
-        <li>
-            <img class="product-image" src="<%= product.image%>" alt="<%= product.name%>">
-            <%= product.name%>-
-           <%= product.price%>-
-            <%= product.brand%>-
+  
+  <h1>Product List</h1>
 
-        </li>
-      <li><%= product.name %> - <%= product.price %> - <%= product.brand %></li>
-    <% }) %>
+  <ul>
+    <% products.forEach((product)=>{ %>
+
+      <li>
+        <Strong>Name:</Strong><%= product.name %>
+        <br>
+        <strong>Price:</strong><%= product.price %>
+      </li>
+      <br>
+    <%});%>
   </ul>
 </body>
 </html>

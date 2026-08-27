@@ -1,22 +1,28 @@
-const express = require('express');
-const app = express();
+const express = require("express");
+const server = express();
+const hostname = "127.0.0.1";
 const port = 3000;
 
- // Define the list of products
-const products = [
-  { name: 'Product 1', price: 10, brand: 'india', image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Coca_Cola_Flasche_-_Original_Taste.jpg/250px-Coca_Cola_Flasche_-_Original_Taste.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail' },
-  { name: 'Product 2', price: 20, brand: 'America' },
-  { name: 'Product 3', price: 30,  brand: 'Japan'},
-  { name: 'Product 4', price: 40, brand: 'Dubai'},
-];
+server.use(express.json());
 
-// Define a route to render the products page
-app.get('/', (req, res) => {
-  // Render the products page using EJS
-  res.render('products.ejs', { products });
+server.get("/",(req,res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+  res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+  res.send("Hello, world!");
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+server.post("/sum",(req,res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+  res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+  const { num1, num2 } = req.body;
+  const sum = num1 + num2;
+  res.json({ sum });
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
