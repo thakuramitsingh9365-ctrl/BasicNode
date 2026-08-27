@@ -1,28 +1,17 @@
 const express = require("express");
-const server = express();
-const hostname = "127.0.0.1";
+const app = express();
 const port = 3000;
+ 
+const products = [
+  { name: "Product1", price: 10},
+  { name: "Product2", price: 20},
+  { name: "Product3", price: 30}
+ ];
 
-server.use(express.json());
-
-server.get("/",(req,res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
-  res.setHeader('Access-Control-Allow-Credentials', true); // If needed
-  res.send("Hello, world!");
+app.get("/",(req,res)=>{
+  res.render("products.ejs", {products});
 });
 
-server.post("/sum",(req,res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
-  res.setHeader('Access-Control-Allow-Credentials', true); // If needed
-  const { num1, num2 } = req.body;
-  const sum = num1 + num2;
-  res.json({ sum });
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port, ()=>{
+  console.log(`Server running at http://localhost:${port}`);
 });

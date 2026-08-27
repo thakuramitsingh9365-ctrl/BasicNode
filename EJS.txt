@@ -1,0 +1,29 @@
+Node EJS (Embedded JavaScript) is a popular templating engine that allows developers to generate HTML pages dynamically on the server-side using JavaScript. It is designed to simplify the process of rendering HTML templates by enabling developers to create reusable components and templates.
+
+EJS is compatible with Node.js, and it works by embedding JavaScript code within HTML markup. With EJS, you can define variables, loops, conditionals, and other JavaScript expressions to generate dynamic content.
+
+The syntax for EJS is straightforward, and it looks similar to traditional HTML. You can include EJS tags within HTML using the '<%' and '%>' symbols to denote JavaScript expressions. For example, you can use '<% if(condition){ %> HTML <% } %>' to conditionally render HTML based on a specific condition.
+
+EJS also allows you to include partial templates that can be reused across multiple pages. You can define these partials using the '<%- include(partial) %>' syntax, where 'partial' is the name of the partial template file.
+
+Overall, Node EJS is a powerful tool for generating dynamic HTML content on the server-side with ease. It's a popular choice for web developers who want to create dynamic websites and web applications using Node.js.
+
+
+
+npm init -y is a command that initializes a new Node.js project and creates a package.json file in the current directory.
+
+The -y flag automatically accepts all default settings when creating the package.json file, which saves you the trouble of manually answering a series of questions about the project, such as the project name, version, description, entry point, author, and license.
+
+This is useful when you're starting a new project and you want to quickly set up a basic package.json file without having to manually enter all the information. Once the package.json file is created, you can edit it to add or modify dependencies, scripts, and other project settings.
+
+Note that if you don't include the -y flag when running npm init, npm will prompt you with a series of questions to gather information about your project before creating the package.json file.
+
+
+
+
+
+
+
+
+
+
