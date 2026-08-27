@@ -1,17 +1,14 @@
-const express = require("express");
+const express = require('express');
 const app = express();
 const port = 3000;
- 
-const products = [
-  { name: "Product1", price: 10},
-  { name: "Product2", price: 20},
-  { name: "Product3", price: 30}
- ];
 
-app.get("/",(req,res)=>{
-  res.render("products.ejs", {products});
+// Define a route to render the template with GET parameters
+app.get('/hello', (req, res) => {
+  const name = req.query.name || 'world'; // Get the "name" parameter from the query string
+  res.render('hello.ejs', { name }); // Pass the "name" parameter to the template
 });
 
-app.listen(port, ()=>{
-  console.log(`Server running at http://localhost:${port}`);
+// Start the server
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
 });
