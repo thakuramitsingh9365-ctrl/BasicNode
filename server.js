@@ -1,44 +1,59 @@
+const express = require('express');
 const mysql = require('mysql2');
-const ejs = require('ejs');
-const fs = require('fs');
 
-// Create a MySQL connection
-const connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: '1234',
-  database: 'node'
+const app = express();
+const port = 3000;
+
+ app.use(express.urlencoded({ extended: true }));
+
+ app.use(express.static('public'));
+
+ const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '1234',
+    database: 'registration'
 });
 
+ connection.connect((error) => {
+    if (error) {
+        console.log('MySQL connection failed:', error);
+        return;
+    }
 
-// Connect to the MySQL server
-connection.connect((error) => {
-  if (error) throw error;
-  console.log('Connected to MySQL server');
-  
-  // Query the table
-  connection.query('SELECT * FROM data', (error, results) => {
-    if (error) throw error;
-    
-    // Read the EJS template file
-    fs.readFile('views/template.ejs', 'utf8', (error, template) => {
-      if (error) throw error;
-      
-      // Render the EJS template with data from the MySQL table
-      const html = ejs.render(template, { data: results });
-      
-      // Save the rendered HTML to a file
-      fs.writeFile('output.html', html, 'utf8', (error) => {
-        if (error) throw error;
-        console.log('HTML file generated successfully');
-        
-        // Close the MySQL connection
-        connection.end((error) => {
-          if (error) throw error;
-          console.log('Disconnected from MySQL server');
-        });
-      });
+    console.log('Connected to MySQL');
+});
+
+ app.post('/register', (req, res) => {
+
+    console.log("Form Data:", req.body);
+
+    const { name, email, password, confirm, mobile, date, file } = req.body;
+
+    if (password !== confirm) {
+        return res.send('Password and Confirm Password do not match');
+    }
+
+    const sql = `
+        INSERT INTO users (name, email, password, mobile, date, file)
+        VALUES (?, ?, ?, ?, ?, ?)
+    `;
+
+    const values = [name, email, password, mobile, date, file];
+
+    connection.query(sql, values, (error, result) => {
+
+        if (error) {
+            console.log("Database Error:", error);
+            return res.send('Data save nahi hua');
+        }
+
+        console.log("Data inserted successfully");
+
+        res.send('Registration Successful!');
     });
-  });
+});
+
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });

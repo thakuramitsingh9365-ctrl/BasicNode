@@ -1,0 +1,29 @@
+<!Doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Input Example</title>
+  </head>
+
+  <body>
+    <div class="box">
+      <span id="result">E</span>
+
+      <input type="text" id="input" oninput="show()" />
+    </div>
+
+    <script>
+      function show() {
+        let input = document.getElementById("input");
+        let result = document.getElementById("result");
+
+        if (input.value == "") {
+          result.innerText = "E";
+        } else {
+          result.innerText = "F";
+        }
+      }
+    </script>
+  </body>
+</html>

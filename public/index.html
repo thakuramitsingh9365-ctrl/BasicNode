@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Step 2: Give boxes classes</title>
+    <style>
+        .row {
+            display: flex;
+            flex-direction: row;
+            border: #0b67b2 2px solid;
+            height: 400px;
+            width: 100%;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            border: #0b67b2 2px solid;
+            height: 400px;
+            width: 100%;
+        }
+
+        .box {
+            border: 2px solid #0b67b2;
+            border-radius: 10px;
+            background: white;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            height: 100px;
+            width: 100px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="col">
+
+
+        <div class="row">
+            <div class="box">Row 1</div>
+        </div>
+
+        <div style="justify-content:center;" class="row">
+            <div class="box">Row 2</div>
+        </div>
+        <div style="justify-content:space-evenly;" class="row">
+            <div class="box">Row 3</div>
+            <div class="box">Row 4</div>
+            <div class="box">Row 5</div>
+
+        </div>
+
+
+
+    </div>
+</body>
+
+</html>
