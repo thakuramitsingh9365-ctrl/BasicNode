@@ -12,7 +12,6 @@ const connection = mysql.createConnection({
   database: 'node'
 });
 
-
 // Connect to the MySQL server
 connection.connect((error) => {
   if (error) throw error;
@@ -28,16 +27,16 @@ connection.connect((error) => {
 
       // Render the EJS template with data from the MySQL table
       const html = ejs.render(template, { data: results });
-
+const output=`output${Math.random()}.html`;
       // Save the rendered HTML to a file
-      fs.writeFile('output.html', html, 'utf8', (error) => {
+      fs.writeFile(output, html, 'utf8', (error) => {
         if (error) throw error;
         console.log('HTML file generated successfully');
 
         // Create a simple HTTP server
         const server = http.createServer((req, res) => {
           // Read the generated HTML file
-          fs.readFile('output.html', 'utf8', (error, content) => {
+          fs.readFile(output, 'utf8', (error, content) => {
             if (error) {
               res.writeHead(500);
               res.end('Error reading HTML file');
