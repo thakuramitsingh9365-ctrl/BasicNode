@@ -1,71 +1,57 @@
-const mysql = require('mysql2');
-const express = require('express');
+const express = require("express");
+const mysql = require("mysql2");
+const cors = require("cors");
+
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-
-
-
-
-
-
-const connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: '1234',
-  database: 'node'
+const server = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  database: "node",
+  password: "1234",
 });
-connection.connect();
 
+app.use(express.json());
+app.use(cors());
 
-
-
-
-
-
-
-
-app.get('/select', (req, res) => {
-
-  res.send("select");
+app.get("/", (req, res) => {
+  res.render(`student.ejs`, {});
 });
-app.get('/delete', (req, res) => {
 
-  res.send("delete");
+app.get("/test", (req, res) => {
+  server.connect();
+  let error = "";
+  let results = "";
+
+  console.log(server);
+
+  const { name, email, password, mobile, cmd } = req.query;
+
+  if (cmd == "update") {
+
+    res.send("Write update code");
+
+  } else 
+     if (cmd == "insert") {
+
+    res.send("write insert code");
+
+    server.query(`INSERT INTO details  VALUES ('${name}', '${email}', '${password}', '${mobile}')`,(error, results));
+
+  } else 
+     if (cmd == "delete") {
+
+    res.send("Deleted success");
+    server.query(`DELETE FROM details WHERE email = '${email}' `,(error,results));
+
+  } else
+    if(cmd == "show") {
+      res.send(`select * from details`,(error,results));
+    // } res.send(cmd);
+  // res.json({message :'data insert success'});
 });
-app.get('/update', (req, res) => {
-  console.log(req.query);
-  const { bookname, author, genre ,id} = req.query;
-  console.log(req.query);
-  const sql = 'update  books set bookname=?, author=?, genre=? where id=?';
- result= connection.query(sql,[bookname,author,genre,id]);
- console.log(result);
 
-  res.send("update");
-});
-//************************************************************* */
-app.get('/insert', (req, res) => {
-
-
-  const { bookname, author, genre } = req.query;
-  console.log(req.query);
-  const sql = 'INSERT INTO books (bookname, author, genre) VALUES (?, ?, ?)';
-  connection.query(sql, [bookname, author, genre], (err, result) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-    res.status(200).send({
-      id: result.insertId, booknamecls
-      , author, genre
-    });
-  })
-}
-
-  
-);
-//********************************************************************* */
-
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
